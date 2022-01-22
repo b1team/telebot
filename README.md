@@ -9,6 +9,7 @@ IF MISSING FILE BUG... -> COPY BUG TO GOOGLE
 ```
 python -m venv venv
 source venv/bin/active
+pip install -r requirements.txt
 ```
 ```
 copy .env.template .env -> change .env file
