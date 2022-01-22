@@ -4,7 +4,7 @@ Download chrome-driver: https://chromedriver.chromium.org/home
 Download: tesseract-ocr: https://stackoverflow.com/questions/46140485/tesseract-installation-in-windows or (google)  
 IF MISSING FILE BUG... -> COPY BUG TO GOOGLE
 
-### install chrome-driver and change path in crawl.py
+### install chromedriver to `driver folder` and change path in crawl.py
 ## RUN
 ```
 python -m venv venv
