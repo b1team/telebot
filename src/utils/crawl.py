@@ -40,7 +40,7 @@ def get_src(msv):
     wd.find_element(
         By.XPATH,
         "//*[@id='ctl00_ContentPlaceHolder_txtSercurityCode1']").send_keys(
-            extract[:4])
+        extract[:4])
 
     wait = WebDriverWait(wd, 10)
     wait.until(
