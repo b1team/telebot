@@ -1,0 +1,166 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Merci",
+        "Bonjour",
+        "chào bạn",
+        "bạn ơi",
+        "bạn ê",
+        "chao xìn",
+        "xin chào",
+        "cho hỏi",
+        "Hey",
+        "alo",
+        "hú",
+        "ê",
+        "Mình cần tư vấn",
+        "Tư vấn giúp mình với"
+      ],
+      "responses": [
+        "Chao xìn! Mình giúp gì được cho bạn?",
+        "Hân hạnh được nói chuyện với bạn nha, mình giúp đc gì nè?",
+        "Chào bạn, mình đứng đây từ chiều",
+        "Mình đợi mãi, bạn cần giúp gì nào?",
+        "Đây. Mình có thể giúp gì cho bạn nhể?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "see you again",
+        "See you later",
+        "Goodbye",
+        "bye bye",
+        "tạm biệt",
+        "thế nhé",
+        "đi đây",
+        "thôi nha",
+        "gặp sau",
+        "lúc khác nói tiếp",
+        "bye bạn",
+        "đi nhé",
+        "farewell",
+        "hẹn gặp lại nhé",
+        "bai bai"
+      ],
+      "responses": [
+        "Tạm biệt nha!",
+        "Okay, Hẹn gặp lại nhé.",
+        "Lần tới lại nói chuyện với mình nha!",
+        "Rảnh thì nói chuyện với mình tiếp nhé.",
+        "Đừng quên mình nha, mình luôn ở đây đợi bạn. Bai bai!"
+      ]
+    },
+    {
+      "tag": "complain",
+      "patterns": [
+        "bot ngu quá",
+        "chán thế",
+        "không hiểu à?",
+        "có thế cũng không hiểu",
+        "đến mức này thì chịu",
+        "bó tay chấm com",
+        "chịu rồi",
+        "chán thật",
+        "quá kém",
+        "kém cỏi quá vậy",
+        "ngốc thế",
+        "haizz",
+	      "too bad"
+      ],
+      "responses": [
+        "Xin lỗi vì mình còn kém. Mình sẽ thông minh hơn trong tương lai.",
+        "Bạn nói đúng mình còn khá sơ xài, nhưng đâu ai mới sinh ra mà biết được mọi thứ đúng ko :\">?"
+      ]
+    },
+    {
+      "tag": "praise",
+      "patterns": [
+        "bot khôn đấy",
+        "ổn áp đấy",
+        "giỏi lắm",
+        "tuyệt vời",
+        "very good",
+        "awesome",
+        "khá quá vậy",
+        "khá lắm",
+        "làm tốt đấy",
+        "good job",
+        "rất tuyệt",
+        "được lắm"
+      ],
+      "responses": [
+        "Đương nhiên, mình mà lị :3.",
+        "Bạn nói thế làm mình ngại lém :3.",
+        "Mình ko giỏi thì ai giỏi đây :3.",
+        "Thường thôi mà, trò này mình làm suốt."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "cảm ơn",
+        "mình thích cậu",
+        "mình yêu cậu"
+      ],
+      "responses": [
+        "Giúp được bạn là mình vui rồi.",
+        "Không có gì nhé! Việc của mình mà.",
+        "Đó là vinh hạnh của mình!"
+      ]
+    },
+    {
+      "tag": "sorry",
+      "patterns": [
+        "Sorry",
+        "Xin lỗi",
+        "mình sai rồi",
+        "mình nhầm"
+      ],
+      "responses": [
+        "Không sao nha bạn, mình cũng hay mắc sai lầm lắm.",
+        "Hoàn toàn ổn bạn tôi ơi. Đời ai tránh được lỗi lầm.",
+        "Sai lầm là một phần tất yếu trong cuộc sống mà bạn. Nhờ nó ta mới trưởng thành lên được chứ."
+      ]
+    },
+    {
+      "tag": "ask_timetable",
+      "patterns": [
+        "Lịch thi sắp tới?",
+        "Bot cho hỏi lịch thi ạ?",
+        "Lịch thi?",
+        "Có những môn nào thi nhỉ?",
+        "Có môn nào phải thi?",
+        "Bot ơi, lịch thi?",
+        "Lịch thi",
+        "Sắp tới thi gì?",
+        "Xin lịch thi"
+      ],
+      "responses": [
+        "Gõ 'Xin lịch thi' để tui kiếm lịch thi cho nà\n Gõ 'Hủy' để hông tìm nữa nà"
+      ]
+    },
+    {
+      "tag": "ask_owner",
+      "patterns": [
+        "Xin thông tin bot với",
+        "Bot là ai thế?",
+        "Ai là bot nhỉ?",
+        "tên bạn là gì thế?",
+        "Cho mình tên bạn",
+        "tên gì bạn?",
+        "số điện thoại bot là gì thế?"
+      ],
+      "responses": [
+        "Lunar"
+      ]
+    }
+  ]
+}
