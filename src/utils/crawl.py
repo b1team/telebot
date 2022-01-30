@@ -10,7 +10,8 @@ import requests
 from datetime import datetime
 from bs4 import BeautifulSoup as BSoup
 
-from supports import get_time_start, get_date, get_date_test
+from src.utils.supports import (get_time_start, get_date, get_date_test,
+                                get_str_date_test)
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
@@ -40,7 +41,7 @@ def get_src(msv):
     wd.find_element(
         By.XPATH,
         "//*[@id='ctl00_ContentPlaceHolder_txtSercurityCode1']").send_keys(
-        extract[:4])
+            extract[:4])
 
     wait = WebDriverWait(wd, 10)
     wait.until(
@@ -86,13 +87,13 @@ def get_test_timetable(msv, src):
                 data = tags_td.find_elements(By.TAG_NAME, 'td')
                 if datetime.now().date() < get_date_test(data[5].text):
                     info = {
-                        "class": data[1].text.strip(),
+                        "classname": data[1].text.strip(),
                         "subject": data[2].text,
                         "date": data[5].text,
                         "time": data[7].text,
                         "room": data[8].text,
                         "time_start": get_time_start(data[7].text),
-                        "date_start": get_date_test(data[5].text),
+                        "date_start": get_str_date_test(data[5].text),
                         "student_id": msv
                     }
                     lst_data.append(info)
@@ -158,7 +159,12 @@ def get_class_timetable(msv, src):
 
 
 def get_data(msv: str):
+    count = 0
     while True:
+        count = count + 1
+        if count == 5:
+            print("Khong vao duoc trang hoac msv ko dung")
+            return {'msv': False}
         try:
             src_timetable, src_timetest = get_src(msv)
             break
@@ -166,7 +172,12 @@ def get_data(msv: str):
             print(ex)
             pass
 
+    count = 0
     while True:
+        count = count + 1
+        if count == 5:
+            print("Khong lay duoc testtable")
+            return {'msv': False}
         try:
             testtable = get_test_timetable(msv, src_timetest)
             break
@@ -174,7 +185,12 @@ def get_data(msv: str):
             print(ex)
             pass
 
+    count = 0
     while True:
+        count = count + 1
+        if count == 5:
+            print("Khong vao duoc trang thoi khoa bieu")
+            return {'msv': False}
         try:
             timetable = get_class_timetable(msv, src_timetable)
             break
@@ -182,4 +198,10 @@ def get_data(msv: str):
             print(ex)
             pass
 
+    print("TIMETABLE", timetable)
+    print("TESTTABLE", testtable)
+    wd.close()
     return testtable, timetable
+
+
+get_data('18810310312')

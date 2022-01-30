@@ -1,69 +1,92 @@
-import numpy
-import random
 from aiogram import types
-from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from random import randint
-from model.train_model import train_model, bag_of_words
-from model.train_model_v2 import response, classify
-from model.train_model_v3 import classify, response
-import pickle
-import json
-
-button1 = InlineKeyboardButton(text="👋 button1",
-                               callback_data="randomvalue_of10")
-button2 = InlineKeyboardButton(text="💋 button2",
-                               callback_data="randomvalue_of100")
-keyboard_inline = InlineKeyboardMarkup().add(button1, button2)
-
-keyboard1 = ReplyKeyboardMarkup(resize_keyboard=True,
-                                one_time_keyboard=True).add(
-                                    "👋 Hello!", "💋 Youtube", 'halo')
+from aiogram.types import ReplyKeyboardMarkup
+from utils.database import (find_one_testtable, find_all_testtable,
+                            find_student_id)
 
 
-async def random_answer(message: types.Message):
-    await message.reply("Select a range:", reply_markup=keyboard_inline)
-
-
-async def welcome(message: types.Message):
-    await message.reply("Hello! Im Gunther Bot, Please follow my YT channel",
-                        reply_markup=keyboard1)
-
-
-async def random_value(call: types.CallbackQuery):
-    if call.data == "randomvalue_of10":
-        await call.message.answer(randint(1, 10))
-    if call.data == "randomvalue_of100":
-        await call.message.answer(randint(1, 100))
-    await call.answer()
-
-
-async def kb_answer(message: types.Message):
-    if message.text == 'Xin lịch thi':
-        await message.reply("Lịch thi đây")
-    elif message.text == 'Hủy':
-        await message.reply("Nhớ để ý lịch thi nhá")
+def markup_keyboard(testtable: list) -> ReplyKeyboardMarkup:
+    # if testtable is empty, return None
+    # get all subject from testtable then add to ReplyKeyboardMarkup
+    # return ReplyKeyboardMarkup
+    global title
+    title = []
+    if testtable == []:
+        markup = ReplyKeyboardMarkup(
+            resize_keyboard=True,
+            one_time_keyboard=True).add("Không có lịch thi")
+        return markup
     else:
-        tag, _ = classify(message.text)
-        await message.reply(response(tag))
+        for i in testtable:
+            title.append(i['subject'])
+        markup = ReplyKeyboardMarkup(resize_keyboard=True,
+                                     one_time_keyboard=True)
+        for title in set(title):
+            markup.add(title)
 
-    # data, words, model, labels = train_model()
-    # if message.text == 'Yes'.lower():
-    #     await message.reply(f"Ready to crawl time sheet")
-    # elif message.text == 'Help'.lower():
-    #     await message.reply("Type 'Timetable' or 'thoi khoa bieu' to check the timetable")
-    # else:
-    #     results = model.predict([bag_of_words(message.text, words)])
-    #     results_index = numpy.argmax(results)
-    #     tag = labels[results_index]
-
-    #     for tg in data["intents"]:
-    #         if tg['tag'] == tag:
-    #             responses = tg['responses']
-    #     await message.reply(random.choice(responses))
+        return markup
 
 
-    # elif message.text == '💋 Youtube':ýe
-    #     await message.reply("https://youtube.com/gunthersuper")
-    # else:
-    #     await message.reply(f"Your message is: {message.text}")
+async def get_markup(message: types.Message):
+    try:
+        student_id = await find_student_id(message['from'].username)
+    except Exception as e:
+        await message.reply(f'Lỗi khi lấy msv: {e}')
+        return
+
+    if student_id is None:
+        await message.answer('''Bạn chưa lấy dữ liệu thời khóa biểu
+                                Dùng /info để biết thêm chi tiết''')
+        return
+    # find_all_testtable, if testtable is empty, reply message and return
+    # if testtable is not empty, get all subject from testtable then add to markup_keyboard
+    # return markup_keyboard
+    try:
+        testtable = await find_all_testtable(student_id)
+    except Exception as e:
+        await message.reply(f'Lỗi khi lấy lịch thi: {e}')
+    if testtable == []:
+        await message.reply('Không có lịch thi')
+        return
+    else:
+        markup = markup_keyboard(testtable)
+        await message.reply('Chọn môn thi', reply_markup=markup)
+
+
+async def show_testtable(message: types.Message):
+    # if message text in title, find_one_testtables and reply message
+    # else reply message and return
+    # return
+    if message.text in title:
+        try:
+            student_id = await find_student_id(message['from'].username)
+        except Exception as e:
+            await message.reply(f'Lỗi khi lấy msv: {e}')
+            return
+
+        try:
+            testtable = await find_one_testtable(message.text, student_id)
+        except Exception as e:
+            await message.reply(f'Lỗi khi lấy lịch thi: {e}')
+        if testtable == []:
+            await message.reply('Không có lịch thi')
+            return
+        else:
+            text = ''
+            for i in testtable:
+                info = f"""
+                ---------------------------------
+                {i['date']}
+                Msv: {i['student_id']}
+                Lớp thi: {i['room']}
+                Môn thi: {i['subject']}
+                Tiết thi: {i['time']}
+                Giờ thi: {i['time_start']}
+                ---------------------------------
+                """
+                text = text + info
+            await message.reply(text)
+    else:
+        await message.reply('''Không có lịch thi
+               Có thể chạy /test để cập nhập các môn thi
+               Nếu không được
+               Gõ `/info` đẻ biết thêm chi tiết cách lấy dữ liệu''')

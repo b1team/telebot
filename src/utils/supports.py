@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 
 def get_date_test(date: str):
@@ -6,6 +6,12 @@ def get_date_test(date: str):
     date_object = datetime.strptime(date_str, '%d-%m-%Y').date()
 
     return date_object
+
+
+def get_str_date_test(date: str):
+    date_str = date[date.find('\n') + 2:].replace(')', '')
+
+    return date_str
 
 
 # tìm giờ bắt đầu học
@@ -34,16 +40,30 @@ def get_time_start(tiet: str):
 # tìm ngày lịch học
 def get_date(date_string: str):
     date_str = date_string[3:13]
-    date_object = datetime.strptime(date_str, '%d-%m-%Y').date()
+    # date_object = datetime.strptime(date_str, '%d-%m-%Y').date()
 
-    return date_object
+    return date_str
 
 
 # format ngay thang nam
 def validate(date_text):
     try:
-        datetime.datetime.strptime(date_text, '%d-%m-%Y')
+        datetime.strptime(date_text, '%d-%m-%Y')
     except ValueError:
-        raise ValueError("Incorrect data format, should be DD-MM-YYY")
+        return False
 
     return True
+
+
+# get all dates of week
+def get_all_dates_of_week(days=0):
+    labels = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật']
+    theday = date.today() + timedelta(days=days)
+    weekday = theday.isoweekday()
+    start = theday - timedelta(days=weekday)
+    dates = [start + timedelta(days=d) for d in range(1, 8)]
+    dates = [str(d.strftime("%d-%m-%Y")) for d in dates]
+
+    dates = list(zip(labels, dates))
+
+    return dates

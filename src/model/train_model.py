@@ -1,17 +1,18 @@
-import nltk
-from nltk.stem.lancaster import LancasterStemmer
-stemmer = LancasterStemmer()
-
-import numpy
-import tflearn
-import tensorflow
-import random
 import json
+import random
+
 import nltk
+import numpy
+import tensorflow
+import tflearn
+from nltk.stem.lancaster import LancasterStemmer
+
+stemmer = LancasterStemmer()
 nltk.download('punkt')
 
+
 def train_model():
-    with open("/home/nacht/telebot/src/model/intents.json") as file:
+    with open("src/model/intents.json") as file:
         data = json.load(file)
     words = []
     labels = []
@@ -72,8 +73,9 @@ def train_model():
     #     model.load("model.tflearn")
     # except Exception:
     model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
-    model.save("/home/nacht/telebot/src/model/model.tflearn")
+    model.save("src/model/model.tflearn")
     return data, words, model, labels
+
 
 def bag_of_words(s, words):
     bag = [0 for _ in range(len(words))]

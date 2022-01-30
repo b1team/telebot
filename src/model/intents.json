@@ -1,37 +1,138 @@
-{"intents": [
-        {"tag": "greeting",
-         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Have a good day", "Hey", "Hey bro"],
-         "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?", "Hi", "Hello", "Nice to meet you", "Hey", "How yah do'in?", "It's nice to talk with you", "Im fine Tks", "Have a good day sir"],
-         "context_set": ""
-        },
-        {"tag": "goodbye",
-         "patterns": ["Bye", "See you later", "Goodbye", "See yah"],
-         "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon.", "Bye bye", "See yah later", "See you later"]
-        },
-        {"tag": "thanks",
-         "patterns": ["Thanks", "Thank you", "That's helpful", "That's meaningful to me"],
-         "responses": ["Happy to help!", "Any time!", "My pleasure", "Ít's good to help you", "Always by your side", "You have my assit"]
-        },
-        {"tag": "old",
-         "patterns": ["How old are you", "Old"],
-         "responses": ["I'm one month year old", "One month", "My age is 1/12"]
-        },
-        {"tag": "name",
-         "patterns": ["What your name", "Your name", "Name"],
-         "responses": ["My name is Lunar", "Lunar", "Lunar ís my name", "Lunar the schedule chat bot", "Best assitance!!!"]
-        },
-        {"tag": "day",
-         "patterns": ["How is your day", "Day", "Today"],
-         "responses": ["Today the weather is great", "Dont you think so?", "It's sunny. Isn't it?", "Great weather", "Rain", "Im not a wweather forecast =.=", "Today is a great day after all", "Today is great", "How is your day?"]
-        },
-        {"tag": "thoi khoa bieu",
-         "patterns": ["Timetable", "Thoi khoa bieu", "Timesheet", "Time Sheet"],
-         "responses": ["Type 'Yes' if you really want to check out the time table\n Type 'No' to decline"]
-        },
-        {"tag": "No",
-         "patterns": ["No", "no", "khong", "toi khong muon"],
-         "responses": ["No? Ok then", "Its good to hear you", "Ok", "let chat about another thing. Shall we?"]
-        }
-]
+{
+	"intents": [
+		{
+			"tag": "greeting",
+			"patterns": [
+				"Hi",
+				"How are you",
+				"Is anyone there?",
+				"Hello",
+				"Good day",
+				"Have a good day",
+				"Hey",
+				"Hey bro"
+			],
+			"responses": [
+				"Hello, thanks for visiting",
+				"Good to see you again",
+				"Hi there, how can I help?",
+				"Hi",
+				"Hello",
+				"Nice to meet you",
+				"Hey",
+				"How yah do'in?",
+				"It's nice to talk with you",
+				"Im fine Tks",
+				"Have a good day sir"
+			],
+			"context_set": ""
+		},
+		{
+			"tag": "goodbye",
+			"patterns": [
+				"Bye",
+				"See you later",
+				"Goodbye",
+				"See yah"
+			],
+			"responses": [
+				"See you later, thanks for visiting",
+				"Have a nice day",
+				"Bye! Come back again soon.",
+				"Bye bye",
+				"See yah later",
+				"See you later"
+			]
+		},
+		{
+			"tag": "thanks",
+			"patterns": [
+				"Thanks",
+				"Thank you",
+				"That's helpful",
+				"That's meaningful to me"
+			],
+			"responses": [
+				"Happy to help!",
+				"Any time!",
+				"My pleasure",
+				"Ít's good to help you",
+				"Always by your side",
+				"You have my assit"
+			]
+		},
+		{
+			"tag": "old",
+			"patterns": [
+				"How old are you",
+				"Old"
+			],
+			"responses": [
+				"I'm one month year old",
+				"One month",
+				"My age is 1/12"
+			]
+		},
+		{
+			"tag": "name",
+			"patterns": [
+				"What your name",
+				"Your name",
+				"Name"
+			],
+			"responses": [
+				"My name is Lunar",
+				"Lunar",
+				"Lunar ís my name",
+				"Lunar the schedule chat bot",
+				"Best assitance!!!"
+			]
+		},
+		{
+			"tag": "day",
+			"patterns": [
+				"How is your day",
+				"Day",
+				"Today"
+			],
+			"responses": [
+				"Today the weather is great",
+				"Dont you think so?",
+				"It's sunny. Isn't it?",
+				"Great weather",
+				"Rain",
+				"Im not a wweather forecast =.=",
+				"Today is a great day after all",
+				"Today is great",
+				"How is your day?"
+			]
+		},
+		{
+			"tag": "thoi khoa bieu",
+			"patterns": [
+				"Timetable",
+				"Thoi khoa bieu",
+				"Timesheet",
+				"Time Sheet"
+			],
+			"responses": [
+				"Type 'Yes' if you really want to check out the time table\n Type 'No' to decline"
+			]
+		},
+		{
+			"tag": "No",
+			"patterns": [
+				"No",
+				"no",
+				"khong",
+				"toi khong muon"
+			],
+			"responses": [
+				"No? Ok then",
+				"Its good to hear you",
+				"Ok",
+				"let chat about another thing. Shall we?"
+			]
+		}
+	]
 }
-
