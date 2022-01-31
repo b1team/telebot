@@ -37,7 +37,6 @@ async def next_week(call: types.CallbackQuery):
         if timetable == []:
             await call.message.answer('Không có lịch học')
         else:
-            text = ''
             for i in timetable:
                 info = \
                         "---------------------------------\n"\
@@ -49,5 +48,4 @@ async def next_week(call: types.CallbackQuery):
                         f"Giờ học: {i['time_start']}\n"\
                         f"Giáo viên: {i['teacher']}\n"\
                         "---------------------------------\n"
-                text = text + info
-            await call.message.answer(text)
+                await call.message.answer(info)
