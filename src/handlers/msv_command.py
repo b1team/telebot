@@ -90,5 +90,6 @@ async def crawl_data(message: types.Message):
 
             await message.reply(
                 f'Đã cập nhật thành công lịch học và thi cho {msv}')
+            await message.answer('Xem các lịch học và thi của bạn: /info')
     except Exception:
         await message.reply('Lỗi khi lấy dữ liệu, chưa lấy được lịch')
