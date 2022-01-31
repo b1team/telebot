@@ -1,6 +1,6 @@
 from aiogram import Dispatcher
 
-from .answer import random_answer, welcome, kb_answer, random_value
+from .answer import welcome, kb_answer
 from .find_command import find_by_day
 from .info_command import info
 from .msv_command import crawl_data
@@ -13,10 +13,6 @@ from utils.supports import get_all_dates_of_week
 # gan command
 def setup(dp: Dispatcher):
     dp.register_message_handler(welcome, commands='start')
-
-    # dp.register_message_handler(random_answer, commands='random')
-    # dp.register_callback_query_handler(
-    #     random_value, text=[i for _, i in get_all_dates_of_week()])
 
     dp.register_message_handler(find_by_day, commands='find')
     dp.register_message_handler(info, commands='info')
