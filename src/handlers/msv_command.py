@@ -10,17 +10,20 @@ async def crawl_data(message: types.Message):
         msv = message.text.split(' ')[1]
     except IndexError:
         await message.reply('Bạn chưa nhập mã sinh viên')
+        return
 
     if len(msv) != 11:
         await message.reply('''Sai định dạng sinh viên 🤔
                             /msv 188xxxxxxxx
                             Mã sinh viên phải có 11 ký tự''')
+        return
 
     try:
         int(msv)
     except ValueError:
         await message.reply(
             'Sai định dạng sinh viên 🤔, mã sinh viên phải là số')
+        return
 
     text = ""
     try:
@@ -48,6 +51,7 @@ async def crawl_data(message: types.Message):
         await delete_testtable(student)
     except Exception as e:
         await message.reply('Lỗi khi xóa dữ liệu để cappj nhập: {}'.format(e))
+        return
 
     try:
         data = get_data(msv)

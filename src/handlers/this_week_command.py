@@ -13,7 +13,7 @@ def get_keyboard() -> InlineKeyboardMarkup:
     return markup
 
 
-async def all_week_dates(message: types.Message):
+async def this_week_dates(message: types.Message):
     await message.reply("Lịch tuần này:", reply_markup=get_keyboard())
 
 

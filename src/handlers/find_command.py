@@ -21,6 +21,7 @@ async def find_by_day(message: types.Message):
         await message.reply(''''Bạn nhập sai ngày tháng năm
             Vui lòng nhập lại, theo định dạng dd-mm-yyyy
             vd: /find 01-03-2022''')
+        return
     else:
         try:
             student_id = await find_student_id(message['from'].username)
@@ -31,13 +32,16 @@ async def find_by_day(message: types.Message):
         if student_id is None:
             await message.reply('''Bạn chưa lấy dữ liệu thời khóa biểu
                                 Dùng /info để biết thêm chi tiết''')
+            return
         else:
             try:
                 timetable = await find_one_timetable(date, student_id)
             except Exception as e:
                 await message.reply(f'Lỗi khi lấy thời khóa biểu: {e}')
+                return
             if timetable == []:
                 await message.reply('Không có lịch học')
+                return
             else:
                 text = ''
                 for i in timetable:

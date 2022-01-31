@@ -17,7 +17,7 @@ async def next_week_dates(message: types.Message):
     await message.reply("Lịch tuần sau:", reply_markup=get_keyboard())
 
 
-async def this_week(call: types.CallbackQuery):
+async def next_week(call: types.CallbackQuery):
     date = call.data
     try:
         student_id = await find_student_id(call['from'].username)

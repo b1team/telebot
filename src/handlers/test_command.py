@@ -87,6 +87,6 @@ async def show_testtable(message: types.Message):
             await message.reply(text)
     else:
         await message.reply('''Không có lịch thi
-               Có thể chạy /test để cập nhập các môn thi
-               Nếu không được
+               Có thể chạy /test để cập nhập các môn thi nếu đã có
+               Nếu không có môn thi có thể là chưa có lịch thi
                Gõ `/info` đẻ biết thêm chi tiết cách lấy dữ liệu''')

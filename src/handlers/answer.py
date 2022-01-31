@@ -35,16 +35,12 @@ async def random_value(call: types.CallbackQuery):
     days = [day for _, day in get_all_dates_of_week()]
     names = [title for title, _ in get_all_dates_of_week()]
     if call.data in days:
-        await call.message.answer(names[days.index(call.data)])
+        await call.message.answer(f"{names[days.index(call.data)]} {call.data}"
+                                  )
     await call.answer()
 
 
 async def kb_answer(message: types.Message):
-    if "msv" in message.text:
-        msv = message.text.split(' ')[1]
-        if len(msv) != 11:
-            await message.reply(f'Sai định dạng sinh viên {msv} 🤔')
-
     if message.text == 'Xin lịch thi' or message.text == 'Xin lịch học':
         try:
             student = await find_student_id(message['from'].username)
@@ -54,10 +50,12 @@ async def kb_answer(message: types.Message):
 
         if not student:
             await message.reply("""Bạn vẫn chưa lấy lịch\nHãy gõ theo lệnh
-                            \n/msv 188xxxxxxxx\n để lấy thông tin""")
+                            /msv 188xxxxxxxx\n để lấy thông tin""")
+            return
         else:
             await message.reply(
                 'Lịch đã được lấy về, bạn có thể gõ /info để xem cách sử dụng')
+            return
     else:
         tag, _ = classify(message.text)
         await message.reply(response(tag))

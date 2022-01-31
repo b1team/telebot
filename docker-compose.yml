@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+    backend:
+        build: . # or image api
+        container_name: telebot
+        env_file:
+            - .env
+        command: python src/main.py
+        restart: always
+        ports:
+            - "5000:5000"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200M"
+                max-file: "5"

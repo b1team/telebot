@@ -2,8 +2,8 @@ from aiogram import types
 
 
 async def info(message: types.Message):
-    text = """
-    Chào mừng đến với chatbot
+    text = f"""
+    Chào mừng {message['from'].username} đến với chatbot
     Các bạn có thể chat lung tung với bot ở đây
     Đây là project môn python
     Hãy nhắn `lịch thi`, `lịch học`, `thi`, `học` để xem các bước xem lịch cưa EPU
@@ -14,7 +14,7 @@ async def info(message: types.Message):
     /thisweek đây là lệnh lấy lịch tuần này
     /nextweek đây là lệnh lấy lịch tuần sau
     /find <ngày-tháng năm> đây là lệnh tìm kiếm lịch học
-    `vd: /find 20/10/2020`
+    `vd: /find 20-10-2020`
     /test để xem lịch thi
     """
     await message.reply(text)
