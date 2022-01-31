@@ -26,6 +26,14 @@ def markup_keyboard(testtable: list) -> ReplyKeyboardMarkup:
         return markup
 
 
+def get_subject(testtable: list):
+    title = []
+    for i in testtable:
+        title.append(i['subject'])
+
+    return title
+
+
 async def get_markup(message: types.Message):
     try:
         student_id = await find_student_id(message['from'].username)
@@ -34,8 +42,9 @@ async def get_markup(message: types.Message):
         return
 
     if student_id is None:
-        await message.answer('''Bạn chưa lấy dữ liệu thời khóa biểu
-                                Dùng /info để biết thêm chi tiết''')
+        text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
+               "Dùng /info để biết thêm chi tiết"
+        await message.answer(text)
         return
     # find_all_testtable, if testtable is empty, reply message and return
     # if testtable is not empty, get all subject from testtable then add to markup_keyboard
@@ -56,6 +65,28 @@ async def show_testtable(message: types.Message):
     # if message text in title, find_one_testtables and reply message
     # else reply message and return
     # return
+    try:
+        student_id = await find_student_id(message['from'].username)
+    except Exception as e:
+        await message.reply(f'Lỗi khi lấy msv: {e}')
+        return
+
+    if student_id is None:
+        text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
+               "Dùng /info để biết thêm chi tiết"
+        await message.answer(text)
+        return
+
+    try:
+        testtable = await find_all_testtable(student_id)
+    except Exception as e:
+        await message.reply(f'Lỗi khi lấy lịch thi: {e}')
+    if testtable == []:
+        await message.reply('Bạn chưa lấy môn thi, /info để biết chi tiết')
+        return
+    else:
+        title = get_subject(testtable)
+
     if message.text in title:
         try:
             student_id = await find_student_id(message['from'].username)
@@ -71,22 +102,18 @@ async def show_testtable(message: types.Message):
             await message.reply('Không có lịch thi')
             return
         else:
-            text = ''
-            for i in testtable:
-                info = f"""
-                ---------------------------------
-                {i['date']}
-                Msv: {i['student_id']}
-                Lớp thi: {i['room']}
-                Môn thi: {i['subject']}
-                Tiết thi: {i['time']}
-                Giờ thi: {i['time_start']}
-                ---------------------------------
-                """
-                text = text + info
+            text = f"<b>Thời gian:</b> {testtable['date']}".replace('\n', " ")
+            info = \
+                f"\n<b>Msv:</b> {testtable['student_id']}\n"\
+                f"<b>Phòng thi:</b> {testtable['room']}\n"\
+                f"<b>Môn thi:</b> {testtable['subject']}\n"\
+                f"<b>Tiết thi:</b> {testtable['time']}\n"\
+                f"<b>Giờ thi:</b> {testtable['time_start']}"
+            text = text + info
             await message.reply(text)
     else:
-        await message.reply('''Không có lịch thi
-               Có thể chạy /test để cập nhập các môn thi nếu đã có
-               Nếu không có môn thi có thể là chưa có lịch thi
-               Gõ `/info` đẻ biết thêm chi tiết cách lấy dữ liệu''')
+        text = "Không có lịch thi\n"\
+               "Có thể chạy /test để cập nhập các môn thi nếu đã có\n"\
+               "Nếu không có môn thi có thể là chưa có lịch thi\n"\
+               "Gõ /info đẻ biết thêm chi tiết cách lấy dữ liệu"
+        await message.reply(text)

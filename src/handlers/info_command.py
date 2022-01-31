@@ -3,18 +3,18 @@ from aiogram import types
 
 async def info(message: types.Message):
     text = f"""
-    Chào mừng {message['from'].username} đến với chatbot
+        <b>Chào mừng {message['from'].username} đến với chatbot</b>
     Các bạn có thể chat lung tung với bot ở đây
     Đây là project môn python
-    Hãy nhắn `lịch thi`, `lịch học`, `thi`, `học` để xem các bước xem lịch cưa EPU
-    ĐẦU TIÊN, HÃY LẤY DỮ LIỆU THỜI KHÓA BIỂU
-    /msv <Mã sinh viên> đây là lệnh để lấy lịch
-    `vd: /msv 188xxxxxxx`
-    SAU KHI LẤY LỊCH THÀNH CÔNG, BẠN NHẬN LỊCH THI, LỊCH HỌC theo các lệnh:
-    /thisweek đây là lệnh lấy lịch tuần này
-    /nextweek đây là lệnh lấy lịch tuần sau
-    /find <ngày-tháng năm> đây là lệnh tìm kiếm lịch học
-    `vd: /find 20-10-2020`
-    /test để xem lịch thi
+    Hãy nhắn <i>lịch thi</i>, <i>lịch học</i>, <i>thi</i>, <i>học</i> để xem các bước xem lịch của EPU
+    <b>ĐẦU TIÊN, HÃY LẤY DỮ LIỆU THỜI KHÓA BIỂU</b>
+    <b>Lấy thời khóa biểu theo:</b> /msv <i>188xxxxxxx</i>
+    <b>SAU KHI LẤY LỊCH THÀNH CÔNG, BẠN NHẬN LỊCH THI, LỊCH HỌC theo các lệnh:</b>
+    <b>Lấy lịch tuần này bằng:</b> /thisweek
+    <b>Lấy lịch tuần sau bằng:</b> /nextweek
+    <b>Tìm lịch học theo ngày bằng:</b> /find ngày-tháng năm
+    <b>Ví dụ:</b> /find <i>20-10-2020</i>
+    <b>Xem có lịch thi không bằng:</b> /test để cập nhập button môn thi
     """
-    await message.reply(text)
+
+    await message.answer(text)

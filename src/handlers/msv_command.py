@@ -13,9 +13,10 @@ async def crawl_data(message: types.Message):
         return
 
     if len(msv) != 11:
-        await message.reply('''Sai định dạng sinh viên 🤔
-                            /msv 188xxxxxxxx
-                            Mã sinh viên phải có 11 ký tự''')
+        text = "Sai định dạng sinh viên 🤔\n"\
+               "Lấy dữ liệu theo /msv 188xxxxxxxx\n"\
+               "Mã sinh viên phải có 11 ký tự"
+        await message.reply(text)
         return
 
     try:
@@ -57,10 +58,12 @@ async def crawl_data(message: types.Message):
         data = get_data(msv)
 
         if type(data) is dict:
-            await message.reply('''Không lấy được lịch
-                Kiểm tra lại mã sinh viên
-                Hoặc trang web bị lỗi
-                Vui lòng thử lại sau''')
+            text = "Không lấy được lịch\n"\
+                   "Kiểm tra lại mã sinh viên\n"\
+                   "Hoặc trang web bị lỗi\n"\
+                   "Vui lòng thử lại sau"
+            await message.reply(text)
+            return
         else:
             testtable, timetable = data
             if testtable != []:

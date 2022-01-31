@@ -18,9 +18,10 @@ async def find_by_day(message: types.Message):
         await message.reply('Bạn chưa nhập ngày')
         return
     if not validate(date):
-        await message.reply(''''Bạn nhập sai ngày tháng năm
-            Vui lòng nhập lại, theo định dạng dd-mm-yyyy
-            vd: /find 01-03-2022''')
+        text = "Bạn nhập sai ngày tháng năm\n"\
+               "Vui lòng nhập lại, theo định dạng dd-mm-yyyy\n"\
+               "Ví dụ: /find 01-03-2022"
+        await message.reply(text)
         return
     else:
         try:
@@ -30,8 +31,9 @@ async def find_by_day(message: types.Message):
             return
 
         if student_id is None:
-            await message.reply('''Bạn chưa lấy dữ liệu thời khóa biểu
-                                Dùng /info để biết thêm chi tiết''')
+            text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
+                   "Dùng /info để biết thêm chi tiết"
+            await message.reply()
             return
         else:
             try:
@@ -45,16 +47,15 @@ async def find_by_day(message: types.Message):
             else:
                 text = ''
                 for i in timetable:
-                    info = f"""
-                    ---------------------------------
-                    {i['weekday']}, {i['date_start']}
-                    Msv: {i['student_id']}
-                    Lớp học: {i['classroom']}
-                    Môn học: {i['subject'][:i['subject'].find('(')]}
-                    Tiết học: {i['class_time']}
-                    Giờ học: {i['time_start']}
-                    Giáo viên: {i['teacher']}
-                    ---------------------------------
-                    """
+                    info = \
+                        "---------------------------------\n"\
+                        f"{i['weekday']}, {i['date_start']}\n"\
+                        f"Msv: {i['student_id']}\n"\
+                        f"Lớp học: {i['classroom']}\n"\
+                        f"Môn học: {i['subject'][:i['subject'].find('(')]}\n"\
+                        f"Tiết học: {i['class_time']}\n"\
+                        f"Giờ học: {i['time_start']}\n"\
+                        f"Giáo viên: {i['teacher']}\n"\
+                        "---------------------------------\n"
                     text = text + info
                 await message.reply(text)

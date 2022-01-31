@@ -22,33 +22,33 @@ async def this_week(call: types.CallbackQuery):
     try:
         student_id = await find_student_id(call['from'].username)
     except Exception as e:
-        await call.reply(f'Lỗi khi lấy msv: {e}')
+        await call.message.answer(f'Lỗi khi lấy msv: {e}')
         return
 
     if student_id is None:
-        await call.answer('''Bạn chưa lấy dữ liệu thời khóa biểu
-                            Dùng /info để biết thêm chi tiết''')
+        await call.message.answer(
+            '''Bạn chưa lấy dữ liệu thời khóa biểu\nDùng /info để biết thêm chi tiết'''
+        )
         return
     else:
         try:
             timetable = await find_one_timetable(date, student_id)
         except Exception as e:
-            await call.reply(f'Lỗi khi lấy thời khóa biểu: {e}')
+            await call.message.answer(f'Lỗi khi lấy thời khóa biểu: {e}')
         if timetable == []:
-            await call.answer('Không có lịch học')
+            await call.message.answer('Không có lịch học')
         else:
             text = ''
             for i in timetable:
-                info = f"""
-                ---------------------------------
-                {i['weekday']}, {i['date_start']}
-                Msv: {i['student_id']}
-                Lớp học: {i['classroom']}
-                Môn học: {i['subject'][:i['subject'].find('(')]}
-                Tiết học: {i['class_time']}
-                Giờ học: {i['time_start']}
-                Giáo viên: {i['teacher']}
-                ---------------------------------
-                """
+                info = \
+                        "---------------------------------\n"\
+                        f"{i['weekday']}, {i['date_start']}\n"\
+                        f"Msv: {i['student_id']}\n"\
+                        f"Lớp học: {i['classroom']}\n"\
+                        f"Môn học: {i['subject'][:i['subject'].find('(')]}\n"\
+                        f"Tiết học: {i['class_time']}\n"\
+                        f"Giờ học: {i['time_start']}\n"\
+                        f"Giáo viên: {i['teacher']}\n"\
+                        "---------------------------------\n"
                 text = text + info
-            await call.answer(text)
+            await call.message.answer(text)

@@ -49,8 +49,9 @@ async def kb_answer(message: types.Message):
             return
 
         if not student:
-            await message.reply("""Bạn vẫn chưa lấy lịch\nHãy gõ theo lệnh
-                            /msv 188xxxxxxxx\n để lấy thông tin""")
+            text = "Bạn vẫn chưa lấy lịch\nHãy gõ theo lệnh\n"\
+                    "/msv 188xxxxxxxx\n để lấy thông tin"
+            await message.reply(text)
             return
         else:
             await message.reply(
