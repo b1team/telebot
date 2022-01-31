@@ -8,6 +8,7 @@ from utils.database import (delete_testtable, insert_student, find_student_id,
 async def crawl_data(message: types.Message):
     try:
         msv = message.text.split(' ')[1]
+        await message.answer('Lấy thành công MSV: {}'.format(msv))
     except IndexError:
         await message.reply('Bạn chưa nhập mã sinh viên')
         return
@@ -25,6 +26,7 @@ async def crawl_data(message: types.Message):
         await message.reply(
             'Sai định dạng sinh viên 🤔, mã sinh viên phải là số')
         return
+    await message.answer('Kiểm tra mã sinh viên đạt chuẩn')
 
     text = ""
     try:
@@ -36,22 +38,23 @@ async def crawl_data(message: types.Message):
     if not student:
         try:
             await insert_student(message['from'].username, msv)
-            text = text + 'Đã thêm mới mã sinh viên của bạn\n'
+            await message.answer('Đã lưu mã sinh viên')
         except Exception as e:
-            await message.reply('Lỗi khi thêm mới msv: {}'.format(e))
+            await message.answer('Lỗi khi thêm mới msv: {}'.format(e))
             return
     else:
         try:
             await update_student(message['from'].username, msv)
-            text = text + 'Đã cập nhập mã sinh viên của bạn'
+            await message.answer('Đã cập nhật mã sinh viên')
         except Exception as e:
-            await message.reply('Lỗi khi cập nhập msv: {}'.format(e))
+            await message.answer('Lỗi khi cập nhập msv: {}'.format(e))
             return
     try:
         await delete_timetable(student)
         await delete_testtable(student)
+        await message.answer("Đã làm sạch thời khóa biểu cũ")
     except Exception as e:
-        await message.reply('Lỗi khi xóa dữ liệu để cappj nhập: {}'.format(e))
+        await message.reply('Lỗi khi xóa dữ liệu để cập nhập: {}'.format(e))
         return
 
     try:
@@ -65,23 +68,27 @@ async def crawl_data(message: types.Message):
             await message.reply(text)
             return
         else:
+            await message.answer("Lấy được thành công lịch")
             testtable, timetable = data
             if testtable != []:
                 try:
                     await insert_testtable(testtable)
+                    await message.answer("Thêm mới thành công lịch thi")
                 except Exception as e:
                     await message.reply('Lỗi khi thêm testtable: {}'.format(e))
             else:
-                text = text + '\nKhông có lịch thi môn nào'
+                await message.answer('Không có lịch thi môn nào')
 
             if timetable != []:
                 try:
                     await insert_timetable(timetable)
+                    await message.answer("Thêm thành công lịch học")
                 except Exception as e:
                     await message.reply('Lỗi khi thêm timetable: {}'.format(e))
             else:
-                text = text + '\nKhông có lịch học môn nào'
+                await message.answer('Không có lịch học môn nào')
 
-            await message.reply(f'Đã lấy dữ liệu thành công{text}')
+            await message.reply(
+                f'Đã cập nhật thành công lịch học và thi cho {msv}')
     except Exception:
         await message.reply('Lỗi khi lấy dữ liệu, chưa lấy được lịch')
