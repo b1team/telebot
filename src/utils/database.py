@@ -47,9 +47,6 @@ async def update_student(username: str, student_id: str):
 async def insert_timetable(timetable: list):
     db = await connect_database()
 
-    if len(timetable) == 0:
-        return True
-
     try:
         await db.timetable.insert_many(timetable)
     except Exception:
@@ -61,9 +58,6 @@ async def insert_timetable(timetable: list):
 # insert lich thi
 async def insert_testtable(testtable: list):
     db = await connect_database()
-
-    if len(testtable) == 0:
-        return True
 
     try:
         await db.testtable.insert_many(testtable)
