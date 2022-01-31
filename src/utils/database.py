@@ -77,7 +77,7 @@ async def find_student_id(username: str):
         raise Exception('Could not find student')
     if document is None:
         return None
-    print(document['student_id'])
+
     return document['student_id']
 
 
