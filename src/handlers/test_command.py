@@ -1,7 +1,6 @@
 from aiogram import types
 from aiogram.types import ReplyKeyboardMarkup
-from utils.database import (find_one_testtable, find_all_testtable,
-                            find_student_id)
+from utils.database import (find_all_testtable, find_student_id)
 
 
 def markup_keyboard(testtable: list) -> ReplyKeyboardMarkup:
@@ -88,29 +87,19 @@ async def show_testtable(message: types.Message):
         title = get_subject(testtable)
 
     if message.text in title:
-        try:
-            student_id = await find_student_id(message['from'].username)
-        except Exception as e:
-            await message.reply(f'Lỗi khi lấy msv: {e}')
-            return
-
-        try:
-            testtable = await find_one_testtable(message.text, student_id)
-        except Exception as e:
-            await message.reply(f'Lỗi khi lấy lịch thi: {e}')
-        if testtable is None:
-            await message.reply('Không có lịch thi')
-            return
-        else:
-            text = f"<b>Thời gian:</b> {testtable['date']}".replace('\n', " ")
-            info = \
-                f"\n<b>Msv:</b> {testtable['student_id']}\n"\
-                f"<b>Phòng thi:</b> {testtable['room']}\n"\
-                f"<b>Môn thi:</b> {testtable['subject']}\n"\
-                f"<b>Tiết thi:</b> {testtable['time']}\n"\
-                f"<b>Giờ thi:</b> {testtable['time_start']}"
-            text = text + info
-            await message.reply(text)
+        for testtable in testtable:
+            if testtable['subject'] == message.text:
+                text = f"<b>Thời gian:</b> {testtable['date']}".replace(
+                    '\n', " ")
+                info = \
+                    f"\n<b>Msv:</b> {testtable['student_id']}\n"\
+                    f"<b>Phòng thi:</b> {testtable['room']}\n"\
+                    f"<b>Môn thi:</b> {testtable['subject']}\n"\
+                    f"<b>Tiết thi:</b> {testtable['time']}\n"\
+                    f"<b>Giờ thi:</b> {testtable['time_start']}"
+                text = text + info
+                await message.reply(text)
+                return
     else:
         text = "Không có lịch thi\n"\
                "Có thể chạy /test để cập nhập các môn thi nếu đã có\n"\

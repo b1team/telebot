@@ -26,9 +26,9 @@ async def this_week(call: types.CallbackQuery):
         return
 
     if student_id is None:
-        await call.message.answer(
-            '''Bạn chưa lấy dữ liệu thời khóa biểu\nDùng /info để biết thêm chi tiết'''
-        )
+        text = 'Bạn chưa lấy dữ liệu thời khóa biểu\n'\
+               'Dùng /info để biết thêm chi tiết'
+        await call.message.answer(text)
         return
     else:
         try:
@@ -36,7 +36,7 @@ async def this_week(call: types.CallbackQuery):
         except Exception as e:
             await call.message.answer(f'Lỗi khi lấy thời khóa biểu: {e}')
         if timetable == []:
-            await call.message.answer('Không có lịch học')
+            await call.message.answer(f'Không có lịch học ngày {date}')
         else:
             for i in timetable:
                 info = \
