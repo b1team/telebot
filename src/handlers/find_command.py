@@ -33,7 +33,7 @@ async def find_by_day(message: types.Message):
         if student_id is None:
             text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
                    "Dùng /info để biết thêm chi tiết"
-            await message.reply()
+            await message.reply(text)
             return
         else:
             try:
