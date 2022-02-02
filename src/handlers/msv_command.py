@@ -58,8 +58,9 @@ async def crawl_data(message: types.Message):
         return
 
     try:
+        await message.answer("Đang lấy dữ liệu...")
         data = get_data(msv)
-
+        await message.answer("Đã lấy dữ liệu thành công")
         if type(data) is dict:
             text = "Không lấy được lịch\n"\
                    "Kiểm tra lại mã sinh viên\n"\
