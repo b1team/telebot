@@ -1,25 +1,26 @@
+import io
+from datetime import datetime
+
+import pytesseract
+import requests
+from bs4 import BeautifulSoup as BSoup
+from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
-import io
-import pytesseract
-from PIL import Image
-import requests
-from datetime import datetime
-from bs4 import BeautifulSoup as BSoup
-
-from src.utils.supports import (get_time_start, get_date, get_date_test,
-                                get_str_date_test)
+from selenium.webdriver.support.ui import Select, WebDriverWait
+from src.config import settings
+from src.utils.supports import (get_date, get_date_test, get_str_date_test,
+                                get_time_start)
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
-wd = webdriver.Chrome(executable_path='src/driver/chromedriver',
-                      options=options)
+# Thay path trong .env
+# .env = cp .env.template .env
+wd = webdriver.Chrome(executable_path=settings.DRIVER_PATH, options=options)
 
 
 def get_src(msv):

@@ -109,6 +109,7 @@ def response(tag):
             return random.choice(i['responses'])
 
 
+# train_model()
 # while True:
 # 	print('Human: ', end=''),
 # 	x = input()

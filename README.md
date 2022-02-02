@@ -6,19 +6,20 @@ Download: tesseract-ocr: https://stackoverflow.com/questions/46140485/tesseract-
 IF MISSING FILE BUG... -> COPY BUG TO GOOGLE
 
 ### install chromedriver to `driver folder` and change path to the driver in crawl.py
-## RUN CODE
+
 ### Setup environment
 ```
+cp .env.template .env THEN Setup uri in .env file
 python -m venv venv
 source venv/bin/active
 pip install -r requirements.txt
 ```
+### RUN COMMANDS
 ```
-cp .env.template .env -> Setup uri in .env file
-
 export PYTHONPATH=$PWD
 python src/main.py  -> run bot
 
 python src/utils/database.py -> change code and run to check database
 python src/utils/crawl.py -> check run selenium crawl
+python src/model/train_modelv3.py -> uncomment train_model() and run to train_model
 ```

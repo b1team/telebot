@@ -11,9 +11,7 @@ async def start_up(dispatcher: Dispatcher):
     # goi y command [BotCommand('TEN_COMMAND', 'PLALCE HOLDER')]
     await dp.bot.set_my_commands([
         BotCommand('start', 'Xin chào'),
-        BotCommand('info', 'Thông tin cách dùng'),
-        # BotCommand('find', 'Tìm lịch học: /find 01-02-2022'),
-        # BotCommand('msv', 'Lấy thông tin msv: /msv 188xxxxxxxx'),
+        BotCommand('info', 'Thông tin cách dùng')
     ])
 
 

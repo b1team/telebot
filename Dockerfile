@@ -8,6 +8,7 @@ RUN apt-get install -y google-chrome-stable
 
 RUN apt install -y chromium-chromedriver
 RUN apt install -y tesseract-ocr
+ENV DISPLAY=:99
 
 WORKDIR /app
 COPY requirements.txt /tmp/requirements.txt
