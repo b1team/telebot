@@ -16,6 +16,7 @@ ENV DISPLAY=:99
 
 WORKDIR /app
 COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip
 RUN pip install -r /tmp/requirements.txt
 ENV PYTHONPATH=/app
 COPY . .
