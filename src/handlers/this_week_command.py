@@ -20,6 +20,7 @@ async def this_week_dates(message: types.Message):
 async def this_week(call: types.CallbackQuery):
     date = call.data
     try:
+        await call.message.answer("Đang kiểm tra mã sinh viên")
         student_id = await find_student_id(call['from'].username)
     except Exception as e:
         await call.message.answer(f'Lỗi khi lấy msv: {e}')
@@ -31,6 +32,7 @@ async def this_week(call: types.CallbackQuery):
         await call.message.answer(text)
         return
     else:
+        await call.message.answer("Mã sinh viên hợp lệ")
         try:
             timetable = await find_one_timetable(date, student_id)
         except Exception as e:

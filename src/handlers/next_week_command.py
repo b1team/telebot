@@ -20,6 +20,7 @@ async def next_week_dates(message: types.Message):
 async def next_week(call: types.CallbackQuery):
     date = call.data
     try:
+        await call.message.answer("Đang kiểm tra mã sinh viên")
         student_id = await find_student_id(call['from'].username)
     except Exception as e:
         await call.message.answer(f'Lỗi khi lấy msv: {e}')
@@ -32,6 +33,8 @@ async def next_week(call: types.CallbackQuery):
         return
     else:
         try:
+            await call.message.answer("Mã sinh viên hợp lệ")
+            await call.message.answer("Đang lấy dữ liệu thi...")
             timetable = await find_one_timetable(date, student_id)
         except Exception as e:
             await call.message.answer(f'Lỗi khi lấy thời khóa biểu: {e}')

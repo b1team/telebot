@@ -1,6 +1,6 @@
 from aiogram import Dispatcher
 
-from .answer import welcome, kb_answer
+from .welcome import welcome
 from .find_command import find_by_day
 from .info_command import info
 from .msv_command import crawl_data
@@ -28,4 +28,3 @@ def setup(dp: Dispatcher):
 
     dp.register_message_handler(get_markup, commands='test')
     dp.register_message_handler(show_testtable)
-    dp.register_message_handler(kb_answer)

@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     backend:
-        build: . # or image api
+        image: telebot:latest # or image api
         container_name: telebot
         env_file:
             - .env
@@ -13,3 +13,5 @@ services:
             options:
                 max-size: "200M"
                 max-file: "5"
+
+# docker-compose -f "docker-compose.yml" up -d --build

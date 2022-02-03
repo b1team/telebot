@@ -1,6 +1,7 @@
 from aiogram import types
 from aiogram.types import ReplyKeyboardMarkup
 from utils.database import (find_all_testtable, find_student_id)
+from model.train_model_v3 import classify, response
 
 
 def markup_keyboard(testtable: list) -> ReplyKeyboardMarkup:
@@ -34,6 +35,7 @@ def get_subject(testtable: list):
 
 
 async def get_markup(message: types.Message):
+    await message.answer("Đang tải dữ liệu...")
     try:
         student_id = await find_student_id(message['from'].username)
     except Exception as e:
@@ -49,6 +51,7 @@ async def get_markup(message: types.Message):
     # if testtable is not empty, get all subject from testtable then add to markup_keyboard
     # return markup_keyboard
     try:
+        await message.answer("Đang tải dữ liệu...")
         testtable = await find_all_testtable(student_id)
     except Exception as e:
         await message.reply(f'Lỗi khi lấy lịch thi: {e}')
@@ -56,6 +59,7 @@ async def get_markup(message: types.Message):
         await message.reply('Không có lịch thi')
         return
     else:
+        await message.answer("Lấy dữ liệu thành công")
         markup = markup_keyboard(testtable)
         await message.reply('Chọn môn thi', reply_markup=markup)
 
@@ -100,9 +104,18 @@ async def show_testtable(message: types.Message):
                 text = text + info
                 await message.reply(text)
                 return
+    elif message.text == 'Xin lịch thi' or message.text == 'Xin lịch học':
+        if not student_id:
+            text = "Bạn vẫn chưa lấy lịch\nHãy gõ theo lệnh\n"\
+                    "/msv 188xxxxxxxx\n để lấy thông tin"
+            await message.reply(text)
+            return
+        else:
+            await message.reply(
+                'Lịch đã được lấy về, bạn có thể gõ /info để xem cách sử dụng')
+            return
     else:
-        text = "Không có lịch thi\n"\
-               "Có thể chạy /test để cập nhập các môn thi nếu đã có\n"\
-               "Nếu không có môn thi có thể là chưa có lịch thi\n"\
-               "Gõ /info đẻ biết thêm chi tiết cách lấy dữ liệu"
-        await message.reply(text)
+        tag, _ = classify(message.text)
+        await message.reply(response(tag))
+        tag, _ = classify(message.text)
+        await message.reply(response(tag))
