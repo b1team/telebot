@@ -1,0 +1,8 @@
+.vscode
+.github
+__pycache__
+.docker
+venv
+package-lock.json
+.idea
+driver
