@@ -80,6 +80,8 @@ async def show_testtable(message: types.Message):
         text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
                "Dùng /info để biết thêm chi tiết"
         await message.answer(text)
+        tag, _ = classify(message.text)
+        await message.answer(response(tag))
         return
 
     try:
