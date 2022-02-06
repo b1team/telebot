@@ -34,7 +34,7 @@ async def next_week(call: types.CallbackQuery):
     else:
         try:
             await call.message.answer("Mã sinh viên hợp lệ")
-            await call.message.answer("Đang lấy dữ liệu thi...")
+            await call.message.answer("Đang lấy dữ liệu học...")
             timetable = await find_one_timetable(date, student_id)
         except Exception as e:
             await call.message.answer(f'Lỗi khi lấy thời khóa biểu: {e}')
