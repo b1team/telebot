@@ -65,13 +65,15 @@ async def get_markup(message: types.Message):
 
 
 async def show_testtable(message: types.Message):
-    # if message text in title, find_one_testtables and reply message
+    # if message text in title, find_one_testtables and answer message
     # else reply message and return
     # return
     try:
         student_id = await find_student_id(message['from'].username)
     except Exception as e:
-        await message.reply(f'Lỗi khi lấy msv: {e}')
+        await message.answer(f'Lỗi khi lấy msv: {e}')
+        tag, _ = classify(message.text)
+        await message.answer(response(tag))
         return
 
     if student_id is None:
@@ -115,7 +117,5 @@ async def show_testtable(message: types.Message):
                 'Lịch đã được lấy về, bạn có thể gõ /info để xem cách sử dụng')
             return
     else:
-        tag, _ = classify(message.text)
-        await message.reply(response(tag))
         tag, _ = classify(message.text)
         await message.reply(response(tag))
