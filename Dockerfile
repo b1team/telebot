@@ -12,7 +12,7 @@ RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`cu
 RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
 RUN apt-get install -y tesseract-ocr
-ENV DISPLAY=:99
+# ENV DISPLAY=:99
 
 WORKDIR /app
 COPY requirements.txt /tmp/requirements.txt

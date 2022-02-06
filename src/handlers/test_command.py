@@ -84,7 +84,7 @@ async def show_testtable(message: types.Message):
         testtable = await find_all_testtable(student_id)
     except Exception as e:
         await message.reply(f'Lỗi khi lấy lịch thi: {e}')
-    if testtable == []:
+    if testtable == [] and message.text == 'Không có lịch thi':
         await message.reply('Bạn chưa lấy môn thi, /info để biết chi tiết')
         return
     else:
