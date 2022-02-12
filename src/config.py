@@ -5,7 +5,6 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     BOT_TOKEN: str = ''
     DB_URL: str = ''
-    DRIVER_PATH: str = ''
 
     class Config:
         env_file = '.env'

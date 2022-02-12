@@ -6,12 +6,13 @@ import requests
 from bs4 import BeautifulSoup as BSoup
 from PIL import Image
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select, WebDriverWait
-from src.config import settings
 from src.utils.supports import (get_date, get_date_test, get_str_date_test,
                                 get_time_start)
+from webdriver_manager.chrome import ChromeDriverManager
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
@@ -20,7 +21,9 @@ options.add_argument('--disable-dev-shm-usage')
 
 # Thay path trong .env
 # .env = cp .env.template .env
-wd = webdriver.Chrome(executable_path=settings.DRIVER_PATH, options=options)
+wd = webdriver.Chrome(service=Service(
+    ChromeDriverManager(print_first_line=False).install()),
+                      options=options)
 
 
 def get_src(msv):
@@ -205,4 +208,4 @@ def get_data(msv: str):
     return testtable, timetable
 
 
-# get_data('18810310312')
+get_data('18810310312')

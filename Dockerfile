@@ -6,11 +6,6 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get -y update
 RUN apt-get install -y google-chrome-stable
 
-# install chromedriver
-RUN apt-get install -yqq unzip
-RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
-RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
-
 RUN apt-get install -y tesseract-ocr
 # ENV DISPLAY=:99
 
@@ -22,4 +17,3 @@ ENV PYTHONPATH=/app
 COPY . .
 
 #  docker build --pull --rm -f "Dockerfile" -t telebot:latest "."
-# change DRIVER_PATH=/usr/local/bin/chromedriver in .env
