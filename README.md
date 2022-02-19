@@ -22,6 +22,7 @@ export PYTHONPATH=$PWD
 ```bash
 python3.9 src/model/train_modelv3.py -> uncomment train_model() and run to train_model
 ```
+#### Run bot
 ```bash
 python3.9 src/main.py  -> run bot
 ```
