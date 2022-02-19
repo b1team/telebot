@@ -1,17 +1,41 @@
 version: "3.7"
 
 services:
-    backend:
-        image: telebot:latest # or image api
+    bot:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: telebot # or image api
         container_name: telebot
         env_file:
             - .env
         command: python src/main.py
-        restart: always
-        logging:
-            driver: "json-file"
-            options:
-                max-size: "200M"
-                max-file: "5"
+        restart: unless-stopped
+        networks:
+            - botnet
+        depends_on:
+            - mongodb
 
-# docker-compose -f "docker-compose.yml" up -d --build
+    mongodb:
+        image: mongo:4.4
+        container_name: telebotmongo
+        restart: unless-stopped
+        ports:
+            - "27017:27017"
+        networks:
+            - botnet
+        volumes:
+          - mongodata:/data/db
+        env_file:
+            - .env
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+            - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+
+networks:
+    botnet:
+        driver: bridge
+
+volumes:
+    mongodata:

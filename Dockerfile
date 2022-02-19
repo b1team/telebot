@@ -15,5 +15,3 @@ RUN pip install --upgrade pip
 RUN pip install -r /tmp/requirements.txt
 ENV PYTHONPATH=/app
 COPY . .
-
-#  docker build --pull --rm -f "Dockerfile" -t telebot:latest "."
