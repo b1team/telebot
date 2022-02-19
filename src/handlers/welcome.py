@@ -1,7 +1,5 @@
 from aiogram import types
 from aiogram.types import ReplyKeyboardMarkup
-from model.train_model_v3 import classify, response
-from utils.database import find_student_id
 
 keyboard1 = ReplyKeyboardMarkup(resize_keyboard=True,
                                 one_time_keyboard=True).add("👋 Hello!")
