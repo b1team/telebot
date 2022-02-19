@@ -60,7 +60,6 @@ async def crawl_data(message: types.Message):
     try:
         await message.answer("Đang lấy dữ liệu...")
         data = get_data(msv)
-        await message.answer("Đã lấy dữ liệu thành công")
         if type(data) is dict:
             text = "Không lấy được lịch\n"\
                    "Kiểm tra lại mã sinh viên\n"\
@@ -69,12 +68,12 @@ async def crawl_data(message: types.Message):
             await message.reply(text)
             return
         else:
-            await message.answer("Lấy được thành công lịch")
+            await message.answer("Đã lấy dữ liệu thành công")
             testtable, timetable = data
             if testtable != []:
                 try:
                     await insert_testtable(testtable)
-                    await message.answer("Thêm mới thành công lịch thi")
+                    await message.answer("Lưu thành công lịch thi")
                 except Exception as e:
                     await message.reply('Lỗi khi thêm testtable: {}'.format(e))
             else:
@@ -83,14 +82,15 @@ async def crawl_data(message: types.Message):
             if timetable != []:
                 try:
                     await insert_timetable(timetable)
-                    await message.answer("Thêm thành công lịch học")
+                    await message.answer("Lưu thành công lịch học")
                 except Exception as e:
                     await message.reply('Lỗi khi thêm timetable: {}'.format(e))
             else:
                 await message.answer('Không có lịch học môn nào')
 
             await message.reply(
-                f'Đã cập nhật thành công lịch học và thi cho {msv}')
+                f'Đã cập nhật thành công lịch học và thi cho {message["from"].username} với mã sinh viên {msv}'
+            )
             await message.answer('Xem các lịch học và thi của bạn: /info')
     except Exception:
         await message.reply('Lỗi khi lấy dữ liệu, chưa lấy được lịch')

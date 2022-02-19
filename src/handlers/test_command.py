@@ -11,9 +11,9 @@ def markup_keyboard(testtable: list) -> ReplyKeyboardMarkup:
     global title
     title = []
     if testtable == []:
-        markup = ReplyKeyboardMarkup(
-            resize_keyboard=True,
-            one_time_keyboard=True).add("Không có lịch thi")
+        markup = ReplyKeyboardMarkup(resize_keyboard=True,
+                                     one_time_keyboard=True)
+        markup.add("Không có lịch thi")
         return markup
     else:
         for i in testtable:
@@ -56,7 +56,8 @@ async def get_markup(message: types.Message):
     except Exception as e:
         await message.reply(f'Lỗi khi lấy lịch thi: {e}')
     if testtable == []:
-        await message.reply('Không có lịch thi')
+        await message.reply('Không có lịch thi', reply_markup=markup)
+        markup = markup_keyboard(testtable)
         return
     else:
         await message.answer("Lấy dữ liệu thành công")
@@ -77,9 +78,6 @@ async def show_testtable(message: types.Message):
         return
 
     if student_id is None:
-        text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
-               "Dùng /info để biết thêm chi tiết"
-        await message.answer(text)
         tag, _ = classify(message.text)
         await message.answer(response(tag))
         return
@@ -108,7 +106,7 @@ async def show_testtable(message: types.Message):
                 text = text + info
                 await message.reply(text)
                 return
-    elif message.text == 'Xin lịch thi' or message.text == 'Xin lịch học':
+    elif message.text in 'Xin lịch thi' or message.text in 'Xin lịch học':
         if not student_id:
             text = "Bạn vẫn chưa lấy lịch\nHãy gõ theo lệnh\n"\
                     "/msv 188xxxxxxxx\n để lấy thông tin"

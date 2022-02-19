@@ -101,7 +101,8 @@ def get_test_timetable(msv, src):
                         "student_id": msv
                     }
                     lst_data.append(info)
-        except Exception:
+        except Exception as e:
+            print("GET TEST TABLE Exception: ", e)
             pass
 
     return lst_data
@@ -156,7 +157,8 @@ def get_class_timetable(msv, src):
                         data.append(msv)
 
                         lst_data.append(dict(zip(labels, data)))
-        except Exception:
+        except Exception as e:
+            print("GET TIMETABLE Exception: ", e)
             pass
 
     return lst_data
@@ -173,7 +175,7 @@ def get_data(msv: str):
             src_timetable, src_timetest = get_src(msv)
             break
         except Exception as ex:
-            print(ex)
+            print("GET SRC Exception: ", ex)
             pass
 
     count = 0
@@ -186,7 +188,7 @@ def get_data(msv: str):
             testtable = get_test_timetable(msv, src_timetest)
             break
         except Exception as ex:
-            print(ex)
+            print("GET TESTTABLE Exception: ", ex)
             pass
 
     count = 0
@@ -199,7 +201,7 @@ def get_data(msv: str):
             timetable = get_class_timetable(msv, src_timetable)
             break
         except Exception as ex:
-            print(ex)
+            print("GET TIMETABLE Exception", ex)
             pass
 
     print("TIMETABLE", timetable)
