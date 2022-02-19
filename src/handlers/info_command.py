@@ -13,7 +13,7 @@ async def info(message: types.Message):
     <b>Lấy lịch tuần này bằng:</b> /thisweek
     <b>Lấy lịch tuần sau bằng:</b> /nextweek
     <b>Tìm lịch học theo ngày bằng:</b> /find ngày-tháng năm
-    <b>Ví dụ:</b> /find <i>20-10-2020</i>
+        <b>Ví dụ:</b> /find <i>01-03-2022</i>
     <b>Xem có lịch thi không bằng:</b> /test để cập nhập button môn thi
     """
 
