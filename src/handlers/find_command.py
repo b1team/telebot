@@ -17,13 +17,12 @@ async def find_by_day(message: types.Message):
     except IndexError:
         await message.reply('Bạn chưa nhập ngày')
         return
-    if not validate(date):
-        if not check_date_format(date):
-            text = "Bạn nhập sai ngày tháng năm\n"\
-                "Vui lòng nhập lại, theo định dạng dd-mm-yyyy\n"\
-                "Ví dụ: /find 01-03-2022"
-            await message.reply(text)
-            return
+    if check_date_format(date) is False or validate(date) is False:
+        text = "Bạn nhập sai ngày tháng năm\n"\
+               "Vui lòng nhập lại, theo định dạng dd-mm-yyyy\n"\
+               "Ví dụ: /find 01-03-2022"
+        await message.reply(text)
+        return
 
     try:
         student_id = await find_student_id(message['from'].username)
