@@ -17,46 +17,46 @@ async def find_by_day(message: types.Message):
     except IndexError:
         await message.reply('Bạn chưa nhập ngày')
         return
-    if not check_date_format(date):
-        if not validate(date):
+    if not validate(date):
+        if not check_date_format(date):
             text = "Bạn nhập sai ngày tháng năm\n"\
                 "Vui lòng nhập lại, theo định dạng dd-mm-yyyy\n"\
                 "Ví dụ: /find 01-03-2022"
             await message.reply(text)
             return
+
+    try:
+        student_id = await find_student_id(message['from'].username)
+    except Exception as e:
+        await message.reply(f'Lỗi khi lấy msv: {e}')
+        return
+
+    if student_id is None:
+        text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
+                "Dùng /info để biết thêm chi tiết"
+        await message.reply(text)
+        return
     else:
         try:
-            student_id = await find_student_id(message['from'].username)
+            timetable = await find_one_timetable(date, student_id)
         except Exception as e:
-            await message.reply(f'Lỗi khi lấy msv: {e}')
+            await message.reply(f'Lỗi khi lấy thời khóa biểu: {e}')
             return
-
-        if student_id is None:
-            text = "Bạn chưa lấy dữ liệu thời khóa biểu\n"\
-                   "Dùng /info để biết thêm chi tiết"
-            await message.reply(text)
+        if timetable == []:
+            await message.reply(f'Không có lịch học ngày {date}')
             return
         else:
-            try:
-                timetable = await find_one_timetable(date, student_id)
-            except Exception as e:
-                await message.reply(f'Lỗi khi lấy thời khóa biểu: {e}')
-                return
-            if timetable == []:
-                await message.reply(f'Không có lịch học ngày {date}')
-                return
-            else:
-                text = ''
-                for i in timetable:
-                    info = \
-                        "---------------------------------\n"\
-                        f"{i['weekday']}, {i['date_start']}\n"\
-                        f"Msv: {i['student_id']}\n"\
-                        f"Lớp học: {i['classroom']}\n"\
-                        f"Môn học: {i['subject'][:i['subject'].find('(')]}\n"\
-                        f"Tiết học: {i['class_time']}\n"\
-                        f"Giờ học: {i['time_start']}\n"\
-                        f"Giáo viên: {i['teacher']}\n"\
-                        "---------------------------------\n"
-                    text = text + info
-                await message.reply(text)
+            text = ''
+            for i in timetable:
+                info = \
+                    "---------------------------------\n"\
+                    f"{i['weekday']}, {i['date_start']}\n"\
+                    f"Msv: {i['student_id']}\n"\
+                    f"Lớp học: {i['classroom']}\n"\
+                    f"Môn học: {i['subject'][:i['subject'].find('(')]}\n"\
+                    f"Tiết học: {i['class_time']}\n"\
+                    f"Giờ học: {i['time_start']}\n"\
+                    f"Giáo viên: {i['teacher']}\n"\
+                    "---------------------------------\n"
+                text = text + info
+            await message.reply(text)
