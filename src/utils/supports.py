@@ -67,3 +67,15 @@ def get_all_dates_of_week(days=0):
     dates = list(zip(labels, dates))
 
     return dates
+
+
+def check_date_format(date_str: str):
+    # split date_str by - and check if len(date_str).split('-') == 3
+    date_split = date_str.split('-')
+    if len(date_split) != 3:
+        return False
+    if (len(date_split[0]) != 2) or (len(date_split[1]) != 2) or (len(
+            date_split[2]) != 4):
+        return False
+
+    return True

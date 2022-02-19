@@ -1,6 +1,6 @@
 from aiogram import types
 from utils.database import find_one_timetable, find_student_id
-from utils.supports import validate
+from utils.supports import validate, check_date_format
 
 
 async def find_by_day(message: types.Message):
@@ -17,12 +17,13 @@ async def find_by_day(message: types.Message):
     except IndexError:
         await message.reply('Bạn chưa nhập ngày')
         return
-    if not validate(date):
-        text = "Bạn nhập sai ngày tháng năm\n"\
-               "Vui lòng nhập lại, theo định dạng dd-mm-yyyy\n"\
-               "Ví dụ: /find 01-03-2022"
-        await message.reply(text)
-        return
+    if not check_date_format(date):
+        if not validate(date):
+            text = "Bạn nhập sai ngày tháng năm\n"\
+                "Vui lòng nhập lại, theo định dạng dd-mm-yyyy\n"\
+                "Ví dụ: /find 01-03-2022"
+            await message.reply(text)
+            return
     else:
         try:
             student_id = await find_student_id(message['from'].username)
