@@ -42,7 +42,7 @@ async def find_by_day(message: types.Message):
             await message.reply(f'Lỗi khi lấy thời khóa biểu: {e}')
             return
         if timetable == []:
-            await message.reply(f'Không có lịch học ngày {date}')
+            await message.reply(f'Không tìm thấy lịch học ngày {date}')
             return
         else:
             text = ''
