@@ -56,6 +56,7 @@ async def get_markup(message: types.Message):
     except Exception as e:
         await message.reply(f'Lỗi khi lấy lịch thi: {e}')
     if testtable == []:
+        markup = markup_keyboard(testtable)
         await message.reply('Không có lịch thi', reply_markup=markup)
         markup = markup_keyboard(testtable)
         return
